@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Memories Diary</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fffafc;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #e85d75;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #444;
+      font-size: 1.2rem;
+    }
+
+    /* 🎵 Music Section */
+    .music-section {
+      text-align: center;
+      margin: 20px auto 40px auto;
+    }
+
+    .music-section h2 {
+      color: #e85d75;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .music-btn {
+      padding: 12px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #e85d75;
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    .music-btn:hover {
+      background: #d94b66;
+    }
+
+    .memory {
+      background: #fff;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      max-width: 800px;
+      position: relative;
+    }
+
+    .memory h2 {
+      color: #e85d75;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .memory p {
+      text-align: center;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    /* ✅ Fix for portrait & landscape media */
+    .media-grid img,
+    .media-grid video,
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      max-height: 300px; /* keeps tall images/videos from being huge */
+      object-fit: contain; /* makes both portrait & landscape fit nicely */
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: block;
+    }
+
+    /* hidden section */
+    .hidden {
+      display: none;
+    }
+
+    .toggle-btn {
+      display: block;
+      margin: 15px auto;
+      padding: 10px 20px;
+      background: #e85d75;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* stickers */
+    .sticker {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .sticker.left {
+      left: -80px;
+      top: 20px;
+    }
+
+    .sticker.right {
+      right: -80px;
+      bottom: 20px;
+    }
+
+    /* Gallery Section */
+    .gallery {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .gallery h2 {
+      text-align: center;
+      color: #e85d75;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      justify-items: center;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .hover-text {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 5px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .hover-text {
+      opacity: 1;
+    }
+
+    @media(max-width: 600px) {
+      .memory {
+        margin: 20px 10px;
+        padding: 15px;
+      }
+      .toggle-btn, .music-btn {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="I'll Be There  Julie Anne San Jose  Lyric Video.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <header>
+    <h1>Our Special Diary</h1>
+    <p>A collection of memories, photos, and videos we’ll never forget 💖</p>
+  </header>
+
+  <!-- 🎵 Music Control Section -->
+  <section class="music-section">
+    <h2>A song that reminds me of you</h2>
+    <button class="music-btn" onclick="toggleMusic()">▶ Play Music</button>
+  </section>
+
+<!-- Memory Entries -->
+<div id="memories-container">
+  <!-- Memory 1 -->
+  <section class="memory">
+    <h2>Memory #1</h2>
+    <p>This is a special moment number 1 ❤️</p>
+    <div class="media-grid">
+      <video src="Messenger_creation_AC5BC8A6-153B-4E75-8C22-211A89E2866D.mp4" controls></video>
+      <video src="Messenger_creation_794FCF30-2567-4459-BC5E-06732BE172E9.mp4" controls></video>
+      <video src="Messenger_creation_BE1A2D7C-871C-478B-A02D-A9473183B6D6.mp4" controls></video>
+
+    </div>
+    <div class="media-grid hidden">
+      <img src="IMG_20250621_024443_829.jpg" alt="Memory 1 photo">
+      <img src="IMG_20250713_005323_674.jpg" alt="Memory 1 photo">
+      <img src="IMG_20250621_025105_758.jpg" alt="Memory 1 photo">
+
+    </div>
+    <button class="toggle-btn" onclick="toggleMedia(this)">Show More</button>
+    <img src="sticker1.png" alt="sticker" class="sticker left">
+    <img src="sticker2.png" alt="sticker" class="sticker right">
+  </section>
+</div>
+
+
+  <!-- Gallery Section -->
+  <section class="gallery">
+    <h2>Photo Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="Screenshot 2023-12-07 211847.png" alt="Gallery Photo 1">
+        <div class="hover-text">First Usap ever about acads pa</div>
+      </div>
+      <div class="gallery-item">
+        <img src="DSC06447.JPG" alt="Gallery Photo 2">
+        <div class="hover-text">First picture Togther during ball</div>
+      </div>
+      <div class="gallery-item">
+        <img src="received_991765686444322.jpeg" alt="Gallery Photo 3">
+        <div class="hover-text">First Ever Harana</div>
+      </div>
+      <div class="gallery-item">
+        <img src="received_705504432038979.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">First and Last Dance</div>
+      </div>
+      <div class="gallery-item">
+        <img src="Screenshot 2025-05-23 162135.png" alt="Gallery Photo 4">
+        <div class="hover-text">Firt watch togther</div>
+      </div>
+          <div class="gallery-item">
+        <img src="IMG_20250516_073744_305.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">First Bouquet Roses</div>
+      </div>
+          <div class="gallery-item">
+        <img src="Screenshot_20250507-230857.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">First picture mo sa Gallery ko</div>
+      </div>
+          <div class="gallery-item">
+        <img src="IMG_20250410_163027_323[1].jpg" alt="Gallery Photo 4">
+        <div class="hover-text">My first random pic sayo</div>
+      </div>
+          <div class="gallery-item">
+        <img src="IMG_20250509_033138_806.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">I think this will be the consider first call / video call</div>
+      </div>
+          <div class="gallery-item">
+        <img src="IMG_20250519_191555_095.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">First Time mo ko inasikaso</div>
+      </div>
+          <div class="gallery-item">
+        <img src="IMG_20250525_081357_808.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">First Simba natin may 3rd wheel pa haha</div>
+      </div>
+          <div class="gallery-item">
+        <img src="received_1345671336761161.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">Eto lang picture natin mag kasama during pictorial crop pa</div>
+      </div>
+          <div class="gallery-item">
+        <img src="Screenshot_20250520-092939.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Unang beses kita naka tulugan sa gitna ng pag uusap</div>
+      </div>
+                <div class="gallery-item">
+        <img src="IMG_20250507_221903_306.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">My first Wallpaper na picture mo</div>
+      </div>
+              <div class="gallery-item">
+        <img src="IMG_20250507_182535_328.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">My second random picture na hindi mo alam, hindi mo pa to nakikita haha</div>
+      </div>
+              <div class="gallery-item">
+        <img src="Screenshot_20250510-181510.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">yung sinabi mo hinahanap ng mga ate mo boyfrined mo ni joke mo punta nako sa inyo</div>
+      </div>
+              <div class="gallery-item">
+        <img src="Screenshot_20250902-214632.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Eto yug time na pinaka ka usap mo sakin ate mo</div>
+      </div>
+             <div class="gallery-item">
+        <img src="IMG_20250509_191054_698.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Ka una unahang I love Chicken Nuggets pero ginawa ko I LOVE YOU haha.</div>
+      </div>
+             <div class="gallery-item">
+        <img src="4862ac17-1ea3-4808-80a9-0b94851ebf33.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">First time call grind pa sa acads both pagod sya e haha</div>
+      </div>
+                 <div class="gallery-item">
+        <img src="IMG_20250615_100110_440.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Second time mo pumunta kay papa and ikaw pa nag yaya at nag sindi ng kandila</div>
+      </div>
+                 <div class="gallery-item">
+        <img src="Messenger_creation_5EDFD8F5-967E-4287-B2D7-E2807EE134E5.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">Sobrang ganda mo dito hawak mo yung binigay ko Bouquet unexpected picture na sined mo</div>
+      </div>
+                 <div class="gallery-item">
+        <img src="Messenger_creation_3DEB7B11-8E8F-41AC-A7FE-4AF0046F2F05.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">sined ko lang yung memories mo story neto binigay mo na agad picture  </div>
+      </div>
+                <div class="gallery-item">
+        <img src="received_1255573829291783.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">ako pala mga nag take ng picture mo nung ball haha</div>
+      </div>
+                <div class="gallery-item">
+        <img src="received_1018137387196537.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">This will be the very special picture of you for me eto yung time na read mo yung mga unsaid words ko sa notepad</div>
+      </div>
+                <div class="gallery-item">
+        <img src="Screenshot_20250524-231951.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">isa to sa mg favorite pictire mo nung stalk ko family mo i see this</div>
+      </div>
+                <div class="gallery-item">
+        <img src="Screenshot_20250517-204533.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">First story na tayong dalawa nag pa alam pa bago ma story hehe</div>
+      </div>
+                <div class="gallery-item">
+        <img src="714a5c21-aab8-4307-a3b5-07281c33b77a.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">another unexpected na pag send mo ng picture mo sobrang cute</div>
+      </div>
+                    <div class="gallery-item">
+        <img src="313fba82-cff2-4c6a-93fe-4e2a406d245a.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Eto naman yung pinag pa alam pa kita para mag simba unang unang pa alam</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="5706f529-c3ca-4ea8-8165-9e4c4f672dcf.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">sined ko sayo first ever tiktok ko </div>
+      </div>
+                        <div class="gallery-item">
+        <img src="b6c25664-9b31-40d8-b462-f8d0349d1a92.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">yung old repost ko na sabi ko sasayawin ko pag nag karon nako nakita mo</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250622_105152_642.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">picture again ng hindi mo alam during 2nd date</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Messenger_creation_025BC2C8-C514-47F9-B5D0-BE504423A518.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">first time mag piture na tayo dalawa lang and eto yung 2nd date pero mas consider na first dahil wala pictire nung una </div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Screenshot_20250623-014832.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">nag aasaran lang parang mga baliw haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250615_125806_110.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">eto yung father's day na dami natin binili and eto din first ever date yata nag jollibee kasi hindi man lang nag picture haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Messenger_creation_57E58244-FB1D-40E2-906A-530AC5C1B91F.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">another pa cute na picture na sined mo sakin and I use it as wallpaper din gulat sya e haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250528_180034_282.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">nag process togther ng mga id's</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250525_180051_103.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">eto yung nag videoke tayo sa inyo pero bago yun inayos pa muna videoke ng ilang minuto haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Messenger_creation_3282AA25-AC16-4FB7-A309-BCD894F9928B.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">Another pretty cute from by baby</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Messenger_creation_03F29C5D-2FD4-4741-87A9-9916A77747F8.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">nag update ka ng picture sakin binigay sa inyo kasi nag paparinig ako sa lobo haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="file_00000000d27061f9be5f47326a6b914f.png" alt="Gallery Photo 4">
+        <div class="hover-text">the chicken nuggest</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Screenshot_20250528-040424.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">isa mga to sa mga video call natin matatagal na hindi mga nag sasalita haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Screenshot_20250620-005627.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">yung nag kaka apoy yung tikto natin</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250628_183102_471.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">eto yung punta mo sa bahay na nililigawan na kita kasama pa sila lyka and duweyn haha</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250709_163928_567.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">nilibre moko sa mcdo nung nag hanap tayo gift mo para sa ate mo</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="IMG_20250611_111902_109.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">picture nanaman sayo hindi mo alam during clerance </div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Messenger_creation_35128405-F586-48BF-9484-58AC13ABDBBE.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">nung umalis kayo neto kishie update with picture pretty</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Screenshot_20250717-001859.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Time na nag papa cute me sayo</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Messenger_creation_A2C84B7E-FCD5-4A55-A020-6AF5EAFC3A1E.jpeg" alt="Gallery Photo 4">
+        <div class="hover-text">pina sama moko sa family bonding nyo</div>
+      </div>
+                        <div class="gallery-item">
+        <img src="Screenshot_20250719-164339.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">naka subay bay tayo kay tutoy at lovely </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="Screenshot_20250702-020910.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">bonding natin mag asaran pero talo lagi sayo </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250704_235114_428.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">another movie togther kahit na antukin haha </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250619_174226_459.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">tamang chismis lang kayo while me pahinga sa pag try ayusin bike ni tito </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="Screenshot_20250702-021905.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">try natin mga filter sa messenger </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250621_025104_446.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">hirap na hirap tayo ma buo yung puso sa pag picture </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="Screenshot_20250627-020902.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">sleep togther online </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250713_005326_776.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">lagi ka naka titigsakin sa call ganda mo lagi </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250713_010017_173.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">after work bebe time tayo </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="Screenshot_20250702-021619.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">Nag online kiss dahil hindi pa puwede at kaya ang totoo kiss </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250722_170454_274.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">pati sa pag kain mo ka usap moko </div>
+      </div>
+                            <div class="gallery-item">
+        <img src="IMG_20250722_193236_699.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">review habang ka video call ako </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="IMG_20250708_013054_691.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">pinag mamasdan lang natin isat isa </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="b641ca7a-5925-4f23-be6c-db19ed637a49.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">kahit sa pag tiktok mo mag ka video call parin tayo </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="IMG_20250708_022232_804.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">early ka nag sleep pinag mamasdan at picturan lang kita</div>
+      </div>
+                                <div class="gallery-item">
+        <img src="ea1899ce-6bc2-4a00-8459-cc43ca233eac.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">madalas ako na uuna nakaka sleep </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="87679c84-fd2b-45c6-aaf9-0e9410cc0ca0.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">ayaw natin mag pa awat kahit lobat at bibigay na phone natin </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="91af0d6f-a22d-43f2-a0e8-de9774b5e850.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">pini pilit ko sabayan sya mag sleep pero nakaka sleep nako una </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="3fa89477-4e3b-4590-83c1-879df3da34da.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">may pa shhh pa ako para kunyari gising pa at masabayan ikaw sa pag pupuyat   </div>
+      </div>
+                                <div class="gallery-item">
+        <img src="7ba7f29d-5c8b-4243-af57-5daba3aab1de.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">na alimpungatan ako na gising ako na remember ko video call kita </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="4747cec6-aeec-4d6a-89ec-fcb47ae82dd9.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">screenshot mo din pag nakaka sleep me lagi </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="6f21bc06-9df6-45ed-967a-2508954ec54b.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">minsan early ka nagigising kasi need mo mag bantay tindahan nyo </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="a54a7405-0364-43db-9407-c295acb80d7c.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">lagi nalang nakaka sleep  </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="3336b2a3-99d7-4fa6-aa00-6733995580d6.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">pa etuc sayo sa video call kasi ganda ganda at cute mo </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="064ba90b-777e-4554-8d05-d71929714cb1.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">iba lagi tingin mo sakin pag sleeping me </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="Screenshot 2025-07-18 112722.png" alt="Gallery Photo 4">
+        <div class="hover-text">sabayan titigan sa isat isa  </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="IMG_20250531_121557_512.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">another picture na hindi mo alam sa inyo busy ikaw mag scroll at bantay ng tindahan </div>
+      </div>
+                                    <div class="gallery-item">
+        <img src="Screenshot_20250709-011709.jpg" alt="Gallery Photo 4">
+        <div class="hover-text">video call while working parin sya OT lagi </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleMedia(btn) {
+      const hiddenGrid = btn.previousElementSibling;
+      hiddenGrid.classList.toggle("hidden");
+      btn.textContent = hiddenGrid.classList.contains("hidden")
+        ? "Show More"
+        : "Show Less";
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById("bg-music");
+      const btn = document.querySelector(".music-btn");
+
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = "⏸ Pause Music";
+      } else {
+        audio.pause();
+        btn.textContent = "▶ Play Music";
+      }
+    }
+  </script>
+</body>
+</html>
