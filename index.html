@@ -196,9 +196,85 @@
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fffafc;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    header h1 {
+      font-family: 'Dancing Script', cursive; /* ✨ Handwritten font */
+      font-size: 2.5rem;
+      color: #e85d75;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-family: 'Dancing Script', cursive; /* ✨ Handwritten font */
+      color: #444;
+      font-size: 1.2rem;
+    }
+
+  .music-section h2,
+  .memory h2,
+  .memory p {
+    font-family: 'Dancing Script', cursive; /* ✨ Handwritten font */
+    font-size: 1.6rem;
+    color: #444;
+  }
+
+  .music-btn {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+  }
+
+    .toggle-btn {
+    font-family: 'Dancing Script', cursive; /* ✨ Handwritten font */
+  }
+    /* 🎀 Special Message Styling */
+    .special-message {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 25px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .special-message h2 {
+      color: #e85d75;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .special-message p {
+      font-size: 1.6rem; /* a bit bigger for handwritten effect */
+      color: #444;
+      line-height: 1.8;
+      min-height: 50px;
+      font-family: 'Dancing Script', cursive; /* ✨ Handwritten font */
+      font-weight: 700;
+    }
+
+    .gallery h2 {
+      font-family: 'Dancing Script', cursive; /* ✨ Handwritten font */
+      font-size: 2.5rem;
+    }
   </style>
 </head>
 <body>
+
+  <!-- 🎨 Handwritten Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
   <!-- Background Music -->
   <audio id="bg-music" loop>
     <source src="I'll Be There  Julie Anne San Jose  Lyric Video.mp3" type="audio/mpeg">
@@ -209,6 +285,12 @@
     <h1>Our Special Diary</h1>
     <p>A collection of memories, photos, and videos we’ll never forget 💖 I hope we can add more memories togther in the near future.</p>
   </header>
+
+<!-- ✨ Special Message Section -->
+<section class="special-message">
+  <p id="typed-message"></p>
+</section>
+
 
   <!-- 🎵 Music Control Section -->
   <section class="music-section">
@@ -240,6 +322,23 @@
   </section>
 </div>
 
+<!-- Memory Entries -->
+<div id="memories-container">
+  <!-- Memory 1 -->
+  <section class="memory">
+    <h2>Memory #1</h2>
+    <p>This is a special moment number 2 ❤️</p>
+    <div class="media-grid">
+
+    </div>
+    <div class="media-grid hidden">
+
+    </div>
+    <button class="toggle-btn" onclick="toggleMedia(this)">Show More</button>
+    <img src="8.png" alt="sticker" class="sticker left">
+    <img src="11.png" alt="sticker" class="sticker right">
+  </section>
+</div>
 
   <!-- Gallery Section -->
   <section class="gallery">
@@ -573,8 +672,25 @@
         btn.textContent = "▶ Play Music";
       }
     }
+
+     // Typewriter Effect
+  const message = 
+  `Jane I know hindi pa to engough sa lahat ng pagkukulang ko pero eto palang kaya 
+  ko for now bawi ako sayo sa lahat soon, sana hayaan moko gawin yun at mahintay mo rin ako gaya ng pag hihintay ko sayo
+  kahit sobrang sakit ng disisyon mo hahayaan ko nalang wala naman nako magagawa kundi tanggapin at respetuhin yun.`;
+  const messageElement = document.getElementById("typed-message");
+  let index = 0;
+
+  function typeMessage() {
+    if (index < message.length) {
+      messageElement.textContent += message.charAt(index);
+      index++;
+      setTimeout(typeMessage, 70); // typing speed
+    }
+  }
+
+  // Start typing when page loads
+  window.onload = typeMessage;
   </script>
 </body>
 </html>
-
-
